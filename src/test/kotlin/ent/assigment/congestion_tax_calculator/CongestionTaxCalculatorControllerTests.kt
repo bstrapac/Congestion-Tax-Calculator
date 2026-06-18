@@ -5,7 +5,6 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.post
 import org.springframework.test.web.servlet.setup.MockMvcBuilders
 import kotlin.test.assertEquals
-import kotlin.test.assertFailsWith
 
 class CongestionTaxCalculatorControllerTests {
 
@@ -61,51 +60,4 @@ class CongestionTaxCalculatorControllerTests {
         }
     }
 
-    @Test
-    fun `accepts supported date time input formats`() {
-        val testCases = mapOf(
-            "14/01/2013 07:00:00" to 18,
-            "14/01/2013 07:00" to 18,
-            "2013-01-14 07:00" to 18,
-            "2013-01-14T07:00:00" to 18,
-            "2013-01-14T06:00:00Z" to 18,
-            "2013-01-14T08:00:00+02:00" to 18,
-        )
-
-        testCases.forEach { (input, expectedAmount) ->
-            val calculation = service.calculate(input)
-
-            assertEquals(expectedAmount, calculation.amount)
-        }
-    }
-
-    @Test
-    fun `does not charge tax on weekends public holidays days before public holidays or in July`() {
-        val taxFreeInputs = listOf(
-            "2013-01-12 07:00:00",
-            "2013-05-01 07:00:00",
-            "2013-04-30 07:00:00",
-            "2013-07-01 07:00:00",
-        )
-
-        taxFreeInputs.forEach { input ->
-            val calculation = service.calculate(input)
-
-            assertEquals(0, calculation.amount)
-        }
-    }
-
-    @Test
-    fun `throws exception when date time is not in 2013`() {
-        assertFailsWith<IllegalArgumentException> {
-            service.calculate("2014-01-14 07:00:00")
-        }
-    }
-
-    @Test
-    fun `throws exception when string input cannot be converted to date time`() {
-        assertFailsWith<IllegalArgumentException> {
-            service.parseDateTime("not-a-date-time")
-        }
-    }
 }

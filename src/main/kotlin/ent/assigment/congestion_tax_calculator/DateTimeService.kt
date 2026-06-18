@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.MonthDay
 import java.time.OffsetDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -22,31 +23,31 @@ class DateTimeService {
         DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"),
     )
     private val taxFreeDates = setOf(
-        "2013-01-01",
-        "2013-01-05",
-        "2013-01-06",
-        "2013-03-28",
-        "2013-03-29",
-        "2013-03-30",
-        "2013-03-31",
-        "2013-04-01",
-        "2013-04-30",
-        "2013-05-01",
-        "2013-05-08",
-        "2013-05-09",
-        "2013-05-18",
-        "2013-05-19",
-        "2013-06-05",
-        "2013-06-06",
-        "2013-06-21",
-        "2013-06-22",
-        "2013-11-01",
-        "2013-11-02",
-        "2013-12-24",
-        "2013-12-25",
-        "2013-12-26",
-        "2013-12-31",
-    ).map(LocalDate::parse).toSet()
+        "--01-01",
+        "--01-05",
+        "--01-06",
+        "--03-28",
+        "--03-29",
+        "--03-30",
+        "--03-31",
+        "--04-01",
+        "--04-30",
+        "--05-01",
+        "--05-08",
+        "--05-09",
+        "--05-18",
+        "--05-19",
+        "--06-05",
+        "--06-06",
+        "--06-21",
+        "--06-22",
+        "--11-01",
+        "--11-02",
+        "--12-24",
+        "--12-25",
+        "--12-26",
+        "--12-31",
+    ).map(MonthDay::parse).toSet()
 
     fun parseDateTime(input: String): LocalDateTime {
         val normalizedInput = input.trim()
@@ -66,7 +67,7 @@ class DateTimeService {
         date.dayOfWeek == DayOfWeek.SATURDAY ||
             date.dayOfWeek == DayOfWeek.SUNDAY ||
             date.monthValue == 7 ||
-            date in taxFreeDates
+            MonthDay.from(date) in taxFreeDates
 
     private fun parseSupportedDateTime(input: String): LocalDateTime {
         localInputFormatters.forEach { formatter ->
