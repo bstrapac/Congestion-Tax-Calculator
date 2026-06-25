@@ -14,13 +14,8 @@ class CongestionTaxCalculatorController(
 
     @PostMapping
     fun calculate(@RequestBody input: String): ResponseEntity<CongestionTaxCalculatorResponse> {
-        val calculation = congestionTaxCalculatorService.calculate(input)
-
         return ResponseEntity.ok(
-            CongestionTaxCalculatorResponse(
-                dateTime = calculation.dateTime.toString(),
-                amount = "${calculation.amount} ${calculation.currency}",
-            ),
+            congestionTaxCalculatorService.calculate(input).toResponse()
         )
     }
 
