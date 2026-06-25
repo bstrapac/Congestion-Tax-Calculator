@@ -9,7 +9,7 @@ class CongestionTaxCalculatorService(
     private val dateTimeService: DateTimeService,
 ) {
 
-    open var currency = "SEK"
+    final var currency = "SEK"
     private val maxDailyAmount = 60
 
     fun calculate(input: String): CongestionTaxCalculation {
@@ -55,9 +55,3 @@ class CongestionTaxCalculatorService(
         return !isBefore(startTime) && !isAfter(endTime)
     }
 }
-
-data class CongestionTaxCalculation(
-    val dateTime: LocalDateTime,
-    val amount: Int,
-    val currency: String,
-)

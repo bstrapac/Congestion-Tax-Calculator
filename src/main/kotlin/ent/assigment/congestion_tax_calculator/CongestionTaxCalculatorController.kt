@@ -23,9 +23,18 @@ class CongestionTaxCalculatorController(
             ),
         )
     }
-}
 
-data class CongestionTaxCalculatorResponse(
-    val dateTime: String,
-    val amount: String,
-)
+    @PostMapping("/array")
+    fun calculate(@RequestBody input: List<String>): ResponseEntity<List<CongestionTaxCalculatorResponse>> {
+        return ResponseEntity.ok(
+            input.map { congestionTaxCalculatorService.calculate(it).toResponse() },
+        )
+    }
+
+    @PostMapping("/json")
+    fun calculate(@RequestBody input: CongestionTaxCalculatorJsonRequest): ResponseEntity<List<CongestionTaxCalculatorResponse>> {
+        return ResponseEntity.ok(
+            input.dates.map { congestionTaxCalculatorService.calculate(it).toResponse() },
+        )
+    }
+}
