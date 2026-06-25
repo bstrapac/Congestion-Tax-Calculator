@@ -11,9 +11,9 @@ class SecurityConfig {
     @Bean
     fun filterChain(http: HttpSecurity): SecurityFilterChain {
         http
-            .csrf { csrf -> csrf.disable() } // Crucial: Stops Spring from rejecting Postman POST requests
+            .csrf { csrf -> csrf.disable() }
             .authorizeHttpRequests { auth ->
-                auth.anyRequest().permitAll() // Allows Postman to hit any route without 401s
+                auth.anyRequest().permitAll()
             }
         return http.build()
     }

@@ -30,7 +30,6 @@ class CongestionTaxCalculatorService(
         if (dateTimeService.isTaxFree(dateTime.toLocalDate())) {
             return 0
         }
-
         return amountFor(dateTime.toLocalTime())
     }
 

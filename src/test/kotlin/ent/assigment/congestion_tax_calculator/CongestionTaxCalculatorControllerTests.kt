@@ -82,7 +82,6 @@ class CongestionTaxCalculatorControllerTests {
 
         testCases.forEach { (input, expectedAmount) ->
             val calculation = service.calculate(input)
-
             assertEquals(expectedAmount, calculation.amount)
         }
     }
